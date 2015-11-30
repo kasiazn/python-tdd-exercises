@@ -1,14 +1,27 @@
 
 def reverse_list(l):
+    """rev=[]
+    print("list has {0} elements".format(len(l)))
+    for i in range(1,len(l)+1):
+        print(l[-i])
+        rev.append(l[-i])
+    """
     """
     Reverses order of elements in list l.
     """
-    return None
+    #return rev
+    return l[::-1]
 
 
 def test_reverse_list():
     assert reverse_list([1, 2, 3, 4, 5]) == [5, 4, 3, 2, 1]
 
+""" debugging reverse
+test_reverse_list
+list=[1,2,3]
+rev=reverse_list(list)
+print(rev)
+"""
 
 # ------------------------------------------------------------------------------
 
@@ -16,21 +29,31 @@ def reverse_string(s):
     """
     Reverses order of characters in string s.
     """
-    return None
+    return s[::-1]
 
 
 def test_reverse_string():
     assert reverse_string("foobar") == "raboof"
 
+#print(reverse_string("Kasia"))
 
 # ------------------------------------------------------------------------------
 
 def is_english_vowel(c):
+    vowels=['a','e','i','o','u','y']
+    #print ("I got {0} and lower case is {1}".format(c,c.lower()))
+    if c.lower() in vowels:
+        #print ("VOWEL")
+        return True
+    else:
+        #print("NOT A VOWEL")
+        return False
     """
     Returns True if c is an english vowel
     and False otherwise.
     """
-    return None
+
+#is_english_vowel("K")
 
 
 def test_is_english_vowel():
@@ -54,10 +77,18 @@ def test_is_english_vowel():
 # ------------------------------------------------------------------------------
 
 def count_num_vowels(s):
+    count=0
+    for i in range (0,len(s)):
+        #print("{0}".format(s[i]))
+        if is_english_vowel(s[i]):
+            count = count+1
     """
     Returns the number of vowels in a string s.
     """
-    return None
+    #print("There are {0} vowels in {1}".format(count,s))
+    return count
+
+#count_num_vowels("Kasia")
 
 
 def test_count_num_vowels():
@@ -75,12 +106,37 @@ def test_count_num_vowels():
 
 # ------------------------------------------------------------------------------
 
-def histogram(l):
+def string_histogram(l):
+    hist=""
+    for i in range(0,len(l)):
+        hist=hist+"#"
+    hist=hist+"\n"
     """
     Converts a list of integers into a simple string histogram.
     """
-    return None
+    #print("String histogram for {0}\n{1}".format(l,hist))
+    return hist
 
+#histogram("Kasia")
+
+def histogram(l):
+    hist=""
+    print("Number of elements is {0}".format(len(l)))
+    for pos in range(0,len(l)):
+        number=l[pos]
+        print("Position {0} number {1}".format(pos, number))
+        for i in range(0,number):
+            hist=hist+"#"
+        if pos < len(l)-1:
+            hist=hist+"\n"
+        print("Round for {0} gives:\n{1}".format(number,hist))
+    """
+    Converts a list of integers into a simple string histogram.
+    """
+    return hist
+
+#histogram([1,3,5])
+#histogram([2,5,1])
 
 def test_histogram():
     assert histogram([2, 5, 1]) == '##\n#####\n#'
@@ -89,27 +145,56 @@ def test_histogram():
 # ------------------------------------------------------------------------------
 
 def get_word_lengths(s):
+    word_lengths=[]
+    all_words=s.split(" ")
+    for word in all_words:
+        word_lengths.append(len(word))
+        print("Adding {0} for {1}".format(len(word),word))
     """
     Returns a list of integers representing
     the word lengths in string s.
     """
-    return None
+    return word_lengths
 
+#get_word_lengths("Kasia is getting really hungry...")
 
 def test_get_word_lengths():
     text = "Three tomatoes are walking down the street"
     assert get_word_lengths(text) == [5, 8, 3, 7, 4, 3, 6]
 
-
 # ------------------------------------------------------------------------------
 
-def find_longest_word(s):
+def find_longest_word_easy(s):
+    longest=""
+    max_length=0
+    all_words=s.split(" ")
+    for word in all_words:
+        #print("Current word {0} length {1}".format(word,len(word)))
+        if len(word) > max_length:
+            longest=word
+            max_length=len(word)
+            #print("best!")
     """
     Returns the longest word in string s.
     In case there are several, return the first.
     """
-    return None
+    #print("Longest word {0} length {1}".format(longest,max_length))
+    return longest
 
+def find_longest_word(s):
+    all_words_lengths=get_word_lengths(s)
+    max_pos=all_words_lengths.index(max(all_words_lengths))
+    words=s.split(" ")
+    longest_word=words[max_pos]
+    """
+    Returns the longest word in string s.
+    In case there are several, return the first.
+    """
+    #print("Longest word {0} length {1}".format(longest,max_length))
+    return longest_word
+
+#find_longest_word("Three tomatoes are walking down the street")
+#find_longest_word("foo foo1 foo2 foo3")
 
 def test_find_longest_word():
     text = "Three tomatoes are walking down the street"
@@ -121,11 +206,17 @@ def test_find_longest_word():
 # ------------------------------------------------------------------------------
 
 def validate_dna(s):
+    # THIS SHOULD REALLY INCLUDE n to be useful!!!
+    dna=['a','c','t','g']
+    for pos in range(0,len(s)):
+        if s[pos].lower() not in dna:
+            print("This is not proper DNA {0}".format(s[pos]))
+            return False
     """
     Return True if the DNA string only contains characters
     a, c, t, or g (lower or uppercase). False otherwise.
     """
-    return None
+    return True
 
 
 def test_validate_dna():
@@ -136,12 +227,22 @@ def test_validate_dna():
 # ------------------------------------------------------------------------------
 
 def base_pair(c):
+    c_lower=c.lower()
+    if c_lower == "a":
+        return "t"
+    elif c_lower == "t":
+        return "a"
+    elif c_lower == "g":
+        return "c"
+    elif c_lower == "c":
+        return "g"
+    else:
+        return "unknown"
     """
     Return the corresponding character (lowercase)
     of the base pair. If the base is not recognized,
     return 'unknown'.
     """
-    return None
 
 
 def test_base_pair():
@@ -160,11 +261,17 @@ def test_base_pair():
 # ------------------------------------------------------------------------------
 
 def transcribe_dna_to_rna(s):
+    rna=""
+    for pos in range(0,len(s)):
+        if s[pos].upper() == "T":
+            rna=rna+"U"
+        else:
+            rna=rna+s[pos].upper()
     """
     Return string s with each letter T replaced by U.
     Result is always uppercase.
     """
-    return None
+    return rna
 
 
 def test_transcribe_dna_to_rna():
@@ -175,11 +282,14 @@ def test_transcribe_dna_to_rna():
 # ------------------------------------------------------------------------------
 
 def get_complement(s):
+    complement=""
+    for pos in range(0,len(s)):
+        complement=complement+base_pair(s[pos]).upper()
+    return complement
     """
     Return the DNA complement in uppercase
     (A -> T, T-> A, C -> G, G-> C).
     """
-    return None
 
 
 def test_get_complement():
@@ -190,11 +300,12 @@ def test_get_complement():
 # ------------------------------------------------------------------------------
 
 def get_reverse_complement(s):
+
     """
     Return the reverse complement of string s
     (complement reversed in order).
     """
-    return None
+    return get_complement(reverse_string(s))
 
 
 def test_get_reverse_complement():
@@ -205,10 +316,11 @@ def test_get_reverse_complement():
 # ------------------------------------------------------------------------------
 
 def remove_substring(substring, string):
+    new_str = string.replace(substring,'')
     """
     Returns string with all occurrences of substring removed.
     """
-    return None
+    return new_str
 
 
 def test_remove_substring():
@@ -221,6 +333,7 @@ def test_remove_substring():
 # ------------------------------------------------------------------------------
 
 def get_position_indices(triplet, dna):
+    
     """
     Returns list of position indices for a specific triplet (3-mer)
     in a DNA sequence. We start counting from 0
